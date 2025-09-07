@@ -1,0 +1,60 @@
+/* Container ocupa 100% da tela e centraliza o form */
+.login-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #0037b2, #8f94fb); /* degrade moderno */
+}
+
+/* Form centralizado com sombra e borda arredondada */
+.login-form {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Título do form */
+.login-title {
+  text-align: center;
+  /* margin-bottom: 24px; */
+  margin: 0px;
+  color: #0037b2;
+}
+
+/* Inputs estilo border-bottom apenas */
+.login-input {
+  border: none;
+  border-bottom: 2px solid #d9d9d9;
+  border-radius: 0;
+  padding: 8px 4px;
+}
+
+.login-input:focus, .login-input:hover {
+  border-bottom: 2px solid #4e54c8;
+  box-shadow: none;
+}
+
+/* Botões com mesmo tamanho */
+.login-button {
+  width: 100%;
+  margin-top: 8px;
+  height: 40px;
+  font-weight: bold;
+}
+
+.register-button {
+  background: #f0f0f0;
+  color: #4e54c8;
+  border: none;
+}
+.register-button:hover {
+  background: #e6e6e6;
+  color: #4e54c8;
+}

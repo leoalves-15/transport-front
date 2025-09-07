@@ -1,22 +1,30 @@
 import Home from './screens/Home';
-import './App.css'
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Login from './screens/Login';
+import SolicitationDetails from './screens/Solicitacao';
+import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from './contexts/AuthContext';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
-
   return (
-    <BrowserRouter>
-      <nav>
-        <Link to="/">Home</Link>
-        {/* <Link to="/sobre">Sobre</Link> */}
-      </nav>
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        {/* <Route path="/sobre" element={<Sobre />} /> */}
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/solicitacao/:id" element={<SolicitationDetails />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 
-export default App
+export default App;
