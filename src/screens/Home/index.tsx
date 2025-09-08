@@ -5,6 +5,7 @@ import type { ColumnsType } from 'antd/es/table';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import formatterStatus from '../../common/formatterStatus';
+import { useAuth } from '../../contexts/AuthContext';
 
 import {
     MenuFoldOutlined,
@@ -43,6 +44,26 @@ const Home: React.FC = () => {
     const [data, setData] = useState<DataType[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
+    const { logout } = useAuth();
+    const handleLogout = async () => {
+        try {
+            const res = await fetch('http://localhost:3000/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`, // se estiver guardando no localStorage
+                },
+            });
+
+            if (!res.ok) throw new Error('Erro ao deslogar');
+
+            logout(); // limpa o contexto/localStorage
+            message.success('Logout realizado com sucesso!');
+            navigate('/login');
+        } catch (err: any) {
+            message.error(err.message || 'Erro no logout');
+        }
+    };
 
     const columns: ColumnsType<DataType> = [
         {
@@ -120,10 +141,12 @@ const Home: React.FC = () => {
             dataIndex: 'solicitation_tpt_id',
             key: 'action',
             render: (id: number) => (
-                <Button variant='solid' style={{borderWidth:'0px'}} onClick={() => navigate(`/solicitacao/${id}`)}>Ver detalhes</Button>
+                <Button variant='solid' style={{ borderWidth: '0px' }} onClick={() => navigate(`/solicitacao/${id}`)}>Ver detalhes</Button>
             ),
         },
     ];
+
+
 
     const [collapsed, setCollapsed] = useState(false);
     const {
@@ -160,6 +183,9 @@ const Home: React.FC = () => {
                                 height: 64,
                             }}
                         />
+                        <Button style={{ float: 'right', margin: '16px' }} onClick={handleLogout} type="primary">
+                            Sair
+                        </Button>
                     </Header>
                     <Layout>
                         <Sider trigger={null} collapsible collapsed={collapsed}>
